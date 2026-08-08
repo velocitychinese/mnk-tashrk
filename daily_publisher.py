@@ -13,11 +13,8 @@ from pathlib import Path
 env_path = Path(__file__).parent / '.env'
 load_dotenv(dotenv_path=env_path, override=True)
 
-# Import upload functions
+# Import upload functions (YouTube only)
 try:
-    from upload.upload_instagram import upload_to_instagram
-    from upload.upload_threads import upload_to_threads
-    from upload.upload_facebook import upload_to_facebook, upload_to_facebook_story
     from upload.upload_to_youtube import upload_to_youtube
 except ImportError as e:
     print(f"Error importing upload modules: {e}")
@@ -232,64 +229,9 @@ def main():
     combined_caption = f"{title}\n\n{description}"
     
     success_flags = {
-        "instagram_reel": False,
-        "instagram_story": False,
-        "facebook_reel": False,
-        "facebook_story": False,
-        "threads": False,
         "youtube": False
     }
     
-    # Instagram Reels
-    try:
-        result = upload_to_instagram(video_path, combined_caption, is_story=False)
-        if result and result.get('status') == 'skipped':
-            print(f"⚠️  Instagram Reel: Skipped ({result.get('reason', 'No credentials')})")
-        else:
-            success_flags["instagram_reel"] = True
-    except Exception as e:
-        print(f"❌ Instagram Reel upload failed: {e}")
-        
-    # Instagram Stories
-    try:
-        result = upload_to_instagram(video_path, combined_caption, is_story=True)
-        if result and result.get('status') == 'skipped':
-            print(f"⚠️  Instagram Story: Skipped ({result.get('reason', 'No credentials')})")
-        else:
-            success_flags["instagram_story"] = True
-    except Exception as e:
-        print(f"❌ Instagram Story upload failed: {e}")
-        
-    # Facebook Reels
-    try:
-        result = upload_to_facebook(video_path, description, title=title)
-        if result and result.get('status') == 'skipped':
-            print(f"⚠️  Facebook Reel: Skipped ({result.get('reason', 'No credentials')})")
-        else:
-            success_flags["facebook_reel"] = True
-    except Exception as e:
-        print(f"❌ Facebook Reel upload failed: {e}")
-        
-    # Facebook Stories
-    try:
-        result = upload_to_facebook_story(video_path)
-        if result and result.get('status') == 'skipped':
-            print(f"⚠️  Facebook Story: Skipped ({result.get('reason', 'No credentials')})")
-        else:
-            success_flags["facebook_story"] = True
-    except Exception as e:
-        print(f"❌ Facebook Story upload failed: {e}")
-        
-    # Threads
-    try:
-        result = upload_to_threads(video_path, combined_caption)
-        if result and result.get('status') == 'skipped':
-            print(f"⚠️  Threads: Skipped ({result.get('reason', 'No credentials')})")
-        else:
-            success_flags["threads"] = True
-    except Exception as e:
-        print(f"❌ Threads upload failed: {e}")
-        
     # YouTube Shorts
     try:
         upload_to_youtube(video_path, title, description, tags=["buddhism", "zen", "mindfulness", "meditation", "wisdom", "innerpeace", "spirituality", "lifelessons", "monk", "philosophy", "peace", "presence", "lettinggo", "buddha", "monk tashirok"])

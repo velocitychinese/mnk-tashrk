@@ -66,8 +66,8 @@ def run_pipeline():
     print("\n✅ Step 2 complete: Video processed\n")
 
     # Step 3: Upload to social media
-    print("📤 STEP 3: Uploading to social media platforms...")
-    print("   Platforms: Instagram, Facebook, Threads, YouTube")
+    print("?? STEP 3: Uploading to social media platforms...")
+    print("   Platform: YouTube (Shorts)")
     print("\n" + "=" * 60 + "\n")
 
     # Run the daily publisher with the processed video
