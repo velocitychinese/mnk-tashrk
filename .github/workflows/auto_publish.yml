@@ -2,11 +2,9 @@ name: Auto Publish Videos
 
 on:
   schedule:
-    # Run 2 times a day:
-    # - 8:00 AM UTC
-    # - 4:00 PM UTC
+  
     - cron: '0 8 * * *'
-    - cron: '0 16 * * *'
+ 
   workflow_dispatch: # Allow manual trigger
 
 permissions:
